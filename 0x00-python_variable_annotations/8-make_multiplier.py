@@ -9,10 +9,9 @@ def make_multiplier(multiplier: float) -> Callable[[float], float]:
     """ type-annotated function make_multiplier that takes a float multiplier as
     argument and returns a function that multiplies a float by multiplier.
     Args:
-        k: str
-        v: int or float
+        Multiplier: float
     Returns:
-        a float
+        function
     """
     def f_callable(n: float) -> float:
         return float(n * multiplier)
