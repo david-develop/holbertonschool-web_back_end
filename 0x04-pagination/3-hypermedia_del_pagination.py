@@ -51,7 +51,8 @@ class Server:
         data = []
 
         index_start = index
-        next_index = index_start + page_size if index_start + page_size < len(indexed_dataset) else None
+        next_index = index_start + page_size\
+            if index_start + page_size < len(indexed_dataset) else None
 
         for i in range(index_start, index_start + page_size):
             value = indexed_dataset.get(i, None)
