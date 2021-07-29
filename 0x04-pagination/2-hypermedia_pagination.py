@@ -60,26 +60,15 @@ class Server:
         """
         res_dict = {}
         data = self.get_page(page, page_size)
-        dataset= self.__dataset
+        dataset = self.__dataset
 
-        res_dict['page_size'] = page_size
+        total_pages = math.ceil(len(dataset) / page_size) if dataset else 0
+
+        res_dict['page_size'] = page_size if data else 0
         res_dict['page'] = page
         res_dict['data'] = data
-        try:
-            self.get_page(page + 1, page_size)
-            res_dict['next_page'] = page + 1
-        except AssertionError:
-            res_dict['next_page'] = None
-
-        try:
-            self.get_page(page - 1, page_size)
-            res_dict['prev_page'] = page - 1
-        except AssertionError:
-            res_dict['prev_page'] = None
-
-        if not data:
-            res_dict['next_page'] = None
-
-        res_dict['total_pages'] = math.ceil(len(dataset) / page_size) if dataset else 0
+        res_dict['next_page'] = page + 1 if page < total_pages else None
+        res_dict['prev_page'] = page - 1 if page > 1 else None
+        res_dict['total_pages'] = total_pages
 
         return res_dict
