@@ -8,10 +8,6 @@ class BasicCache(BaseCaching):
     """ BasicCache defines:
       - Basic caching system inherit from BaseCaching
     """
-    def __init__(self):
-        """Instantiation
-        """
-        super().__init__()
 
     def put(self, key, item):
         """Assign items to cache data"""
