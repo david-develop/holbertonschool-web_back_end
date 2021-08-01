@@ -82,7 +82,7 @@ def main():
     for row in cursor:
         str_msj = ''
         for key, value in row.items():
-            str_msj += '{}={};'.format(key, value)
+            str_msj += '{}={}; '.format(key, value)
         logger.info(str_msj.strip())
 
     cursor.close()
