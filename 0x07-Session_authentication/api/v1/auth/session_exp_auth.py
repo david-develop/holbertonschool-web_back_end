@@ -3,16 +3,15 @@
 """
 from api.v1.auth.session_auth import SessionAuth
 from datetime import datetime, timedelta
-from models.user import User
-from os import getenv
+import os
 
 
 class SessionExpAuth(SessionAuth):
     """Session Expiration Class"""
 
     def __init__(self):
-        """Constructor Method"""
-        session_exp = getenv('SESSION_DURATION')
+        """Constructor"""
+        session_exp = os.getenv('SESSION_DURATION')
 
         try:
             session_duration = int(session_exp)
@@ -22,7 +21,7 @@ class SessionExpAuth(SessionAuth):
         self.session_duration = session_duration
 
     def create_session(self, user_id=None):
-        """Creation session with expiration"""
+        """Session with expiration that return session id"""
 
         session_id = super().create_session(user_id)
 
@@ -39,7 +38,7 @@ class SessionExpAuth(SessionAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """gets user_id from session_id"""
+        """returns a User ID based on a Session ID expiration setted"""
 
         if session_id is None or session_id not in\
                 self.user_id_by_session_id.keys():
