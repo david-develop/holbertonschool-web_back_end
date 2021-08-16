@@ -66,5 +66,4 @@ class DB:
 
         for key, value in kwargs.items():
             setattr(found_user, key, value)
-        self._session.add(found_user)
         self._session.commit()
