@@ -65,12 +65,10 @@ class DB:
         if not kwargs:
             raise ValueError
 
-        column_names = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in column_names:
-                raise ValueError
-
         for key, value in kwargs.items():
-            setattr(found_user, key, value)
+            if hasattr(found_user, key):
+                setattr(found_user, key, value)
+            else:
+                raise ValueError
 
         self._session.commit()
