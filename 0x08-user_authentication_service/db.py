@@ -57,9 +57,11 @@ class DB:
         return found_user
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """ Update users attributes
+        """ Update User
         Returns: None
         """
+        found_user = self.find_user_by(id=user_id)
+
         if not kwargs:
             raise ValueError
 
@@ -67,10 +69,8 @@ class DB:
         for key in kwargs.keys():
             if key not in column_names:
                 raise ValueError
-        user = self.find_user_by(id=user_id)
-
 
         for key, value in kwargs.items():
-            setattr(user, key, value)
+            setattr(found_user, key, value)
 
         self._session.commit()
