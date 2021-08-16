@@ -55,3 +55,15 @@ class DB:
             raise NoResultFound
 
         return found_user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Locate and update User instance"""
+        try:
+            found_user = self.find_user_by(id = user_id)
+        except NoResultFound:
+            raise ValueError
+
+        for key, value in kwargs.items():
+            setattr(found_user, key, value)
+        self._session.add(found_user)
+        self._session.commit()
