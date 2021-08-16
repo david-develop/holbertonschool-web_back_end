@@ -58,10 +58,11 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Locate and update User instance"""
-        try:
-            found_user = self.find_user_by(id = user_id)
-        except NoResultFound:
-            raise ValueError
+        found_user = self.find_user_by(id=user_id)
+        column_names = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in column_names:
+                raise ValueError
 
         for key, value in kwargs.items():
             setattr(found_user, key, value)
