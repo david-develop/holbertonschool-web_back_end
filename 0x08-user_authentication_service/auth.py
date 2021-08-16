@@ -28,12 +28,11 @@ class Auth:
         """Save an user to the database using self._db and return the User
         object.
         """
-        try:
-            user = self._db.find_user_by(email=email)
-        except NoResultFound:
-            hashed_password = _hash_password(password)
-            user = self._db.add_user(email, hashed_password)
-            return user
-
+        found_user = self._db._session.query(User).filter_by(
+            email=email).first()
+        if found_user is None:
+            hashed = _hash_password(password)
+            new_user = self._db.add_user(email, hashed)
+            return new_user
         else:
             raise ValueError(f'User {email} already exists')
