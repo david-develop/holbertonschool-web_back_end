@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello_world() -> str:
-    """ Basic route GET"""
+    """ Base route for authentication service API """
     msg = {"message": "Bienvenue"}
     return jsonify(msg)
 
