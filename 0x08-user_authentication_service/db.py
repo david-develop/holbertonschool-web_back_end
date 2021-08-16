@@ -60,12 +60,15 @@ class DB:
         """ Update users attributes
         Returns: None
         """
-        user = self.find_user_by(id=user_id)
+        if not kwargs:
+            raise ValueError
 
         column_names = User.__table__.columns.keys()
         for key in kwargs.keys():
             if key not in column_names:
                 raise ValueError
+        user = self.find_user_by(id=user_id)
+
 
         for key, value in kwargs.items():
             setattr(user, key, value)
