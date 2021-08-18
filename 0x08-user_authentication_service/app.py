@@ -53,16 +53,15 @@ def login():
 @app.route('/sessions', methods=['DELETE'])
 def logout():
     """Logout users"""
-    session_id_req = request.cookies["session_id"]
-    session_id = AUTH.get_user_from_session_id(session_id_req)
-    if session_id:
-        try:
-            user = AUTH._db.find_user_by(session_id=session_id)
-        except NoResultFound:
-            abort(403)
-        else:
-            AUTH.destroy_session(user.id)
-            return redirect('/')
+    session_id_req = request.cookies.get("session_id", None)
+    if not session_id_req:
+        abort(403)
+    user = AUTH.get_user_from_session_id(session_id_req)
+    if user:
+        AUTH.destroy_session(user.id)
+        return redirect('/')
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
