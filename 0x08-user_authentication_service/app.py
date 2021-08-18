@@ -105,7 +105,7 @@ def update_password():
         abort(403)
     else:
         msg = {"email": email, "message": "Password updated"}
-        return jsonify
+        return jsonify(msg)
 
 
 if __name__ == "__main__":
