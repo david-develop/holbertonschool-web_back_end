@@ -2,9 +2,10 @@
 """
 Route module for the API
 """
-import re
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
+from sqlalchemy.orm.exc import NoResultFound
 from auth import Auth
+
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -47,6 +48,21 @@ def login():
         return output
     else:
         abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'])
+def logout():
+    """Logout users"""
+    session_id_req = request.cookies["session_id"]
+    session_id = AUTH.get_user_from_session_id(session_id_req)
+    if session_id:
+        try:
+            user = AUTH._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            abort(403)
+        else:
+            AUTH.destroy_session(user.id)
+            return redirect('/')
 
 
 if __name__ == "__main__":
