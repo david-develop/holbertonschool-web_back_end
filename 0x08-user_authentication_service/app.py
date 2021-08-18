@@ -62,7 +62,7 @@ def logout():
         return redirect('/')
     else:
         abort(403)
-
+    
 
 @app.route('/profile', methods=['GET'])
 def profile() -> str:
@@ -76,6 +76,20 @@ def profile() -> str:
         return jsonify(msg)
     else:
         abort(403)
+
+
+@app.route('/reset_password', methods=['POST'])
+def get_reset_password_token():
+    """Reset users password"""
+    req_par = request.form
+    email = req_par.get('email')
+    try:
+        token = AUTH.get_reset_password_token(email)
+    except ValueError:
+        abort(403)
+    else:
+        msg = {"email": email, "reset_token": token}
+        return jsonify(msg)
 
 
 if __name__ == "__main__":
