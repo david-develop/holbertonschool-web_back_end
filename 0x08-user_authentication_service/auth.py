@@ -69,3 +69,13 @@ class Auth:
             new_uuid = _generate_uuid()
             self._db.update_user(found_user.id, session_id=new_uuid)
             return new_uuid
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """Method that takes a single session_id string argument and returns
+        the corresponding User or None."""
+        try:
+            found_user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+        else:
+            return found_user.session_id
