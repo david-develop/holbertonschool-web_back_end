@@ -3,7 +3,7 @@
 basic Flask app
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
@@ -19,10 +19,20 @@ babel = Babel(app)
 app.config.from_object(Config)
 
 
+@babel.localeselector
+def get_locale() -> str:
+    """Get locale parameters"""
+    locale = request.args.get('locale')
+    match = app.config['LANGUAGES']
+    if locale and locale in match:
+        return locale
+    return request.accept_languages.best_match(match)
+
+
 @app.route('/', methods=['GET'])
 def home() -> str:
     """Basic welcome"""
-    return render_template('1-index.html')
+    return render_template('4-index.html')
 
 
 if __name__ == "__main__":
