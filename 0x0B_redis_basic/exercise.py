@@ -5,6 +5,15 @@ Exercise Module
 from typing import Callable, Union
 import redis
 import uuid
+from functools import wraps
+
+
+def count_calls(method: Callable) -> Callable:
+    @wraps(method)
+    def wrapper(*args, **kwds):
+        args[0]._redis.incr(method.__qualname__, 1)
+        return method(*args, **kwds)
+    return wrapper
 
 
 class Cache:
@@ -17,6 +26,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Method that takes a data argument and returns a string key"""
         ran_key = str(uuid.uuid4())
