@@ -42,7 +42,7 @@ def replay(method: Callable) -> None:
 
     try:
         count = redis_ins.get(fn_name).decode('utf-8')
-    except:
+    except Exception:
         count = 0
 
     print("{} was called {} times:".format(fn_name, count))
