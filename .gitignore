@@ -26,3 +26,6 @@ __pycache__/
 .vscode
 
 *.db
+
+node_modules
+**/node_modules
