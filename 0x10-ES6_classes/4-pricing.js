@@ -10,7 +10,7 @@ export default class Pricing {
     }
   }
 
-  get amout() {
+  get amount() {
     return this._amount;
   }
 
