@@ -1,4 +1,4 @@
-export default function updateStudentGradeByCity(students, city, newGrades) {
+function updateStudentGradeByCity(students, city, newGrades) {
   if (!Array.isArray(students)) {
     return [];
   }
@@ -6,23 +6,28 @@ export default function updateStudentGradeByCity(students, city, newGrades) {
     return [];
   }
 
-  const stByCity = students.filter((student) => student.location === city);
+  const stCity = students.filter((student) => student.location === city);
 
-  const stWithGrade = stByCity.map((student) => {
-    const grades = newGrades.filter((grade) => grade.studentId === student.id);
+  const studentsGraded = stCity.map((student) => {
+    const gradeFilter = newGrades.filter(
+      (newGrade) => newGrade.studentId === student.id,
+    );
 
-    let gradeadd;
+    let grade;
 
-    if (grades[0]) {
-      gradeadd = grades[0].grade;
+    if (gradeFilter[0]) {
+      grade = gradeFilter[0].grade;
     } else {
-      gradeadd = 'N/A';
+      grade = 'N/A';
     }
+
     return {
       ...student,
-      gradeadd,
+      grade,
     };
   });
 
-  return stWithGrade;
+  return studentsGraded;
 }
+
+export default updateStudentGradeByCity;
