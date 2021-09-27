@@ -12,15 +12,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/students', async (req, res) => {
-  // res.write('This is the list of our students\n');
   try {
     const students = await countStudents(file);
     res.send(`This is the list of our students\n${students.join('\n')}`);
   } catch (e) {
-    res.send(e.message);
+    res.send(e);
   }
-  res.statusCode = 404;
-  res.send();
 });
 
 app.listen(port, () => {
