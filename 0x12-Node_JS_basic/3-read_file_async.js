@@ -1,30 +1,39 @@
 const fs = require('fs');
 
 async function countStudents(path) {
-  let content;
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, { encoding: 'utf8' }, (err, data) => {
+      if (err) {
+        reject(Error('Cannot load the database'));
+        return;
+      }
+      const resp = [];
+      let msg;
 
-  try {
-    content = await fs.promises.readFile(path, { encoding: 'utf8' });
-    content = content.split('\n').filter((l) => l);
-    if (content.length > 0) {
-      content.shift();
-    }
-  } catch (e) {
-    throw new Error('Cannot load the database');
-  }
+      let content = data.toString().split('\n');
+      content = content.filter((item) => item);
+      if (content.length > 0) {
+        content.shift();
+      }
+      const numEst = content.length;
+      msg = `Number of students: ${numEst}`;
+      console.log(msg);
+      resp.push(msg);
 
-  const numEst = content.length;
-  console.log(`Number of students: ${numEst}`);
+      const students = content.map((student) => student.split(','));
 
-  const students = content.map((student) => student.split(','));
-
-  const setField = new Set();
-  students.forEach((student) => setField.add(student[3]));
-  setField.forEach((field) => {
-    const group = students.filter((student) => student[3] === field);
-    const count = group.length;
-    const names = group.map((student) => student[0]).join(', ');
-    console.log(`Number of students in ${field}: ${count}. List: ${names}`);
+      const setField = new Set();
+      students.forEach((student) => setField.add(student[3]));
+      setField.forEach((field) => {
+        const group = students.filter((student) => student[3] === field);
+        const count = group.length;
+        const names = group.map((student) => student[0]).join(', ');
+        msg = `Number of students in ${field}: ${count}. List: ${names}`;
+        console.log(msg);
+        resp.push(msg);
+      });
+      resolve(resp);
+    });
   });
 }
 
