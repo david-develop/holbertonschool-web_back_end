@@ -10,7 +10,7 @@ export default function cleanSet(set, startString) {
   const finalArr = [];
   const point = startString.length;
   set.forEach((element) => {
-    if (startString && element.startsWith(startString)) {
+    if (element && element.startsWith(startString)) {
       const finalStr = element.slice(point);
       finalArr.push(finalStr);
     }
