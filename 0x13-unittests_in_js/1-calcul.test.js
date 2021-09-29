@@ -1,29 +1,17 @@
-const assert = require('assert');
 const calculateNumber = require('./1-calcul');
+const assert = require('assert');
 
 describe('calculateNumber', () => {
-  it('SUM Two integers', () => {
-    assert.strictEqual(calculateNumber('SUM', 1, 3), 4);
+  it('should round a and b and return the sum', () => {
+    assert.deepStrictEqual(calculateNumber('SUM', 1.4, 4.5), 6);
   });
-  it('SUM Integer and float', () => {
-    assert.strictEqual(calculateNumber('SUM', 1, 3.7), 5);
+  it('should round a and b and return the sum', () => {
+    assert.deepStrictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
   });
-  it('SUM Foalt and float', () => {
-    assert.strictEqual(calculateNumber('SUM', 1.2, 3.7), 5);
+  it('should round a and b and return the sum', () => {
+    assert.deepStrictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
   });
-  it('SUM Foalt and float', () => {
-    assert.strictEqual(calculateNumber('SUM', 1.5, 3.7), 6);
-  });
-  it('SUM Foalt and integer', () => {
-    assert.strictEqual(calculateNumber('SUM', 3.7, 1), 5);
-  });
-  it('SUBTRACT Foalt and float', () => {
-    assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
-  });
-  it('DIVIDE Foalt and float', () => {
-    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
-  });
-  it('DIVIDE Foalt and float', () => {
-    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
+  it('should round a and b and return the sum', () => {
+    assert.deepStrictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
   });
 });
