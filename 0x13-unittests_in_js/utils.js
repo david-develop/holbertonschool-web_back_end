@@ -1,25 +1,16 @@
 const Utils = {
   calculateNumber(type, a, b) {
-    let res;
+    const num1 = Math.round(a);
+    const num2 = Math.round(b);
+
     switch (type) {
-      case 'SUM': {
-        res = Math.round(a) + Math.round(b);
-        break
-      }
-      case 'SUBTRACT': {
-        res = Math.round(a) - Math.round(b);
-        break
-      }
-      case 'DIVIDE': {
-        if (b === 0) {
-          res = 'Error'
-        } else {
-          res = Math.round(a) / Math.round(b);
-        }
-        break
-      }
+      case 'SUM':
+        return num1 + num2
+      case 'SUBTRACT':
+        return num1 - num2
+      case 'DIVIDE':
+        return num2 === 0 ? 'Error' : num1 / num2;
     }
-    return res;
   }
 }
 
