@@ -1,4 +1,4 @@
-function calculateNumber(type, a, b) {
+const calculateNumber = (type, a, b) => {
   let res;
   switch (type) {
     case 'SUM': {
