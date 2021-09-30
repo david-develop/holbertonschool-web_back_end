@@ -1,5 +1,5 @@
 const calculateNumber = require('./2-calcul_chai');
-const expect = require('chai').expect
+const { expect } = require('chai')
 
 describe('calculateNumber', () => {
   it('should round a and b and return by the type', () => {
