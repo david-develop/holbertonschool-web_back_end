@@ -1,3 +1,7 @@
+/* eslint-disable jest/valid-expect */
+/* eslint-disable jest/prefer-expect-assertions */
+/* eslint-disable jest/no-hooks */
+/* eslint-disable no-undef */
 import kue from 'kue';
 import { expect } from 'chai';
 import createPushNotificationsJobs from './8-job';
@@ -28,30 +32,30 @@ describe('createPushNotificationsJobs', () => {
     queue.testMode.exit();
   });
 
-  it('Display a error message if jobs is not an array passing Number', () => {
+  it('display a error message if jobs is not an array passing Number', () => {
     expect(() => {
       createPushNotificationsJobs(2, queue);
     }).to.throw('Jobs is not an array');
   });
 
-  it('Display a error message if jobs is not an array passing Object', () => {
+  it('display a error message if jobs is not an array passing Object', () => {
     expect(() => {
       createPushNotificationsJobs({}, queue);
     }).to.throw('Jobs is not an array');
   });
 
-  it('Display a error message if jobs is not an array passing String', () => {
+  it('display a error message if jobs is not an array passing String', () => {
     expect(() => {
       createPushNotificationsJobs('test', queue);
     }).to.throw('Jobs is not an array');
   });
 
-  it('If jobs is an array with empty array should NOT display a error message', () => {
+  it('if jobs is an array with empty array should NOT display a error message', () => {
     const jobFn = createPushNotificationsJobs([], queue);
     expect(jobFn).to.equal(undefined);
   });
 
-  it('Create two new jobs to the queue', () => {
+  it('create two new jobs to the queue', () => {
     createPushNotificationsJobs(jobs, queue);
     expect(queue.testMode.jobs.length).to.equal(2);
 
